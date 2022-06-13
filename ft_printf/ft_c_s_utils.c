@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   c_s_utils.c                                        :+:      :+:    :+:   */
+/*   ft_c_s_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:59:51 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 17:59:59 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:48:56 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,13 @@ char	*ft_modify_string(char *str, t_info info)
 	return (tmp);
 }
 
-int	ft_print_percent(t_info info)
+int	ft_print_percent(t_info info, int retlen)
 {
 	char	c;
 	char	*str;
 	char	*ret;
-	int		len;
 
 	c = '%';
-	
 	if (info.width > 0)
 	{
 		str = (char *)ft_calloc(2, sizeof(char));
@@ -77,10 +75,11 @@ int	ft_print_percent(t_info info)
 			return (-1);
 		*str = c;
 		ret = ft_modify_string(str, info);
-		len = ft_strlen(ret);
-		write(1, ret, len);
-		free(ret);
-		return (len);
+		return (ft_write(ret, retlen));
+		// len = ft_strlen(ret);
+		// write(1, ret, len);
+		// free(ret);
+		// return (len);
 	}
 	else
 		return (write(1, &c, 1));

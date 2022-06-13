@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_c_s.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:00:56 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 18:01:05 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:49:20 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ char	*ft_modify_null(t_info info)
 	return (tmp);
 }
 
-int	ft_print_null(t_info info)
+int	ft_print_null(t_info info, int retlen)
 {
 	char	*str;
 	char	*ret;
@@ -71,26 +71,33 @@ int	ft_print_null(t_info info)
 	str = ret;
 	while (*ret)
 	{
+		if (retlen == INT_MAX)
+		{
+			free(str);
+			return (-1);
+		}
 		if (*ret == '!')
 			len += write(1, "\0", 1);
 		else
 			len += write(1, ret, 1);
+		++retlen;
 		++ret;
 	}
 	free(str);
 	return (len);
 }
 
-int	ft_print_char(va_list ap, t_info info)
+int	ft_print_char(va_list ap, t_info info, int retlen)
 {
 	char	c;
 	char	*str;
 	char	*ret;
 	int		len;
 
+	len = 0;
 	c = (char)va_arg(ap, int);
 	if (c == '\0')
-		return (ft_print_null(info));
+		return (ft_print_null(info, retlen));
 	if (info.width > 0)
 	{
 		str = (char *)ft_calloc(2, sizeof(char));
@@ -98,10 +105,7 @@ int	ft_print_char(va_list ap, t_info info)
 			return (-1);
 		*str = c;
 		ret = ft_modify_string(str, info);
-		len = ft_strlen(ret);
-		write(1, ret, len);
-		free(ret);
-		return (len);
+		return (ft_write(ret, retlen));
 	}
 	else
 		return (write(1, &c, 1));
@@ -114,6 +118,7 @@ int	ft_print_str(va_list ap, t_info info, int retlen)
 	int		len;
 	char	*tmp;
 
+	len = 0;
 	tmp = va_arg(ap, char *);
 	if (info.precision == 0)
 		str = ft_strdup("");
@@ -122,15 +127,5 @@ int	ft_print_str(va_list ap, t_info info, int retlen)
 	else
 		str = ft_strdup(tmp);
 	ret = ft_modify_string(str, info);
-	str = ret;
-	while (*ret)
-	{	
-		if (retlen == INT_MAX)
-			return (-1);
-		len += write(1, ret, 1);
-		++retlen;
-		++ret;
-	}
-	free(str);
-	return (len);
+	return (ft_write(ret, retlen));
 }

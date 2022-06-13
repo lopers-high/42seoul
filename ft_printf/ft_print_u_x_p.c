@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_u_x_p.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:35 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 18:03:57 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/13 16:46:04 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-int	ft_print_unsigned_decimal(va_list ap, t_info info)
+int	ft_print_unsigned_decimal(va_list ap, t_info info, int retlen)
 {
 	unsigned int	i;
 	char			*str;
@@ -27,12 +27,13 @@ int	ft_print_unsigned_decimal(va_list ap, t_info info)
 	else
 		str = ft_uitoa(i);
 	str = ft_modify_unsigned_number(str, info);
-	len += write(1, str, ft_strlen(str));
-	free(str);
-	return (len);
+	return (ft_write(str, retlen));
+	//len += write(1, str, ft_strlen(str));
+	//free(str);
+	//return (len);
 }
 
-int	ft_print_hex(va_list ap, t_info info)
+int	ft_print_hex(va_list ap, t_info info, int retlen)
 {
 	unsigned long	n;
 	int				size;
@@ -47,14 +48,20 @@ int	ft_print_hex(va_list ap, t_info info)
 	if (info.precision == 0 && n == 0)
 		hex = ft_strdup("");
 	else
-		hex = ft_hex_to_str(n, size, "0123456789ABCDEF");
+	{
+		if (info.type == 'x')
+			hex = ft_hex_to_str(n, size, "0123456789abcdef");
+		else
+			hex = ft_hex_to_str(n, size, "0123456789ABCDEF");
+	}
 	hex = ft_modify_unsigned_number(hex, info);
-	len += write(1, hex, ft_strlen(hex));
-	free(hex);
-	return (len);
+	return (ft_write(hex, retlen));
+	// len += write(1, hex, ft_strlen(hex));
+	// free(hex);
+	// return (len);
 }
 
-int	ft_print_hex_lower(va_list ap, t_info info)
+int	ft_print_hex_lower(va_list ap, t_info info, int retlen)
 {
 	unsigned long	n;
 	int				size;
@@ -71,12 +78,13 @@ int	ft_print_hex_lower(va_list ap, t_info info)
 	else
 		hex = ft_hex_to_str(n, size, "0123456789abcdef");
 	hex = ft_modify_unsigned_number(hex, info);
-	len += write(1, hex, ft_strlen(hex));
-	free(hex);
-	return (len);
+	return (ft_write(hex, retlen));
+	// len += write(1, hex, ft_strlen(hex));
+	// free(hex);
+	// return (len);
 }
 
-int	ft_print_pointer(va_list ap, t_info info)
+int	ft_print_pointer(va_list ap, t_info info, int retlen)
 {
 	unsigned long	n;
 	int				size;
@@ -98,7 +106,8 @@ int	ft_print_pointer(va_list ap, t_info info)
 		n /= 16;
 	}
 	hex = ft_modify_unsigned_number(hex, info);
-	len += write(1, hex, ft_strlen(hex));
-	free(hex);
-	return (len);
+	return (ft_write(hex, retlen));
+	// len += write(1, hex, ft_strlen(hex));
+	// free(hex);
+	// return (len);
 }
