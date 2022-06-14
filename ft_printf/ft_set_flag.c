@@ -3,19 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_set_flag.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:49 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 18:06:29 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:38:52 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
-#include "limits.h"
 
 static int	ft_get_info_width(const char **format)
 {
-	unsigned long	width;
+	unsigned long long	width;
 
 	width = 0;
 	while (ft_isdigit(**format))
@@ -24,14 +23,14 @@ static int	ft_get_info_width(const char **format)
 		++(*format);
 	}
 	if (INT_MAX <= width && width <= LLONG_MAX)
-		return(-1);
+		return (-1);
 	--(*format);
-	return (width);
+	return ((int)width);
 }
 
 static long long	ft_get_info_precision(const char **format)
 {
-	unsigned long	precision;
+	long long	precision;
 
 	precision = 0;
 	++(*format);
@@ -49,7 +48,7 @@ static t_info	set_info(void)
 	t_info	info;
 
 	info.flag = 0;
-	info.precision = -1;
+	info.precision = -2;
 	info.type = 0;
 	info.width = 0;
 	info.sign = 1;

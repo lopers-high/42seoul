@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:25 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/13 17:02:55 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:32:31 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,16 +44,14 @@ int	ft_print_decimal(va_list ap, t_info info, int retlen)
 {
 	int		i;
 	char	*str;
-	int		len;
 	char	*ret;
 
-	len = 0;
 	i = va_arg(ap, int);
-	if (info.precision > INT_MAX && info.precision - ft_uintlen(i) <= INT_MAX)
-		info.precision = info.precision - ft_uintlen(i);
-	else if (info.precision == INT_MAX)
+	info.precision = ft_handle_precision_error(info.precision, ft_uintlen(i));
+	if (info.precision == -1)
 		return (-1);
 	str = ft_int_to_str(i, &info);
 	ret = ft_modify_signed_number(str, info);
 	return (ft_write(ret, retlen));
 }
+

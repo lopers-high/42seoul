@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   u_x_p_utils.c                                      :+:      :+:    :+:   */
+/*   ft_u_x_p_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:57 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 18:08:05 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:49:10 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static char	*ft_unum_width(char *str, t_info info, int len)
 		return (NULL);
 	while (i < info.width - len)
 	{
-		if (info.flag & 2 && info.precision == -1)
+		if (info.flag & 2 && info.precision == -2)
 			space[i++] = '0';
 		else
 			space[i++] = ' ';

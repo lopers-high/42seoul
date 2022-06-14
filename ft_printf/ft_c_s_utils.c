@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 17:59:51 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/13 16:48:56 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 10:51:07 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,10 +76,6 @@ int	ft_print_percent(t_info info, int retlen)
 		*str = c;
 		ret = ft_modify_string(str, info);
 		return (ft_write(ret, retlen));
-		// len = ft_strlen(ret);
-		// write(1, ret, len);
-		// free(ret);
-		// return (len);
 	}
 	else
 		return (write(1, &c, 1));

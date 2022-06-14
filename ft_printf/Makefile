@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+         #
+#    By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/03/24 17:01:08 by jinypark          #+#    #+#              #
-#    Updated: 2022/03/31 18:17:44 by jinypark         ###   ########.fr        #
+#    Updated: 2022/06/14 16:18:09 by jinypark         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libft
 
-SRCS = ft_printf.c ft_c_s_utils.c ft_d_i_utils.c ft_u_x_p_utils.c ft_print_c_s.c ft_print_d_i.c ft_print_u_x_p.c ft_set_flag.c ft_uitoa.c
+SRCS = ft_printf.c ft_c_s_utils.c ft_d_i_utils.c ft_u_x_p_utils.c ft_print_c_s.c ft_print_d_i.c ft_print_u_x_p.c ft_set_flag.c ft_uitoa.c ft_utils.c
 
 BONUS = ft_printf_bonus.c c_s_utils_bonus.c d_i_utils_bonus.c u_x_p_utils_bonus.c ft_print_char_bonus.c
 
@@ -55,5 +55,5 @@ fclean: clean
 re:
 	make fclean
 	make all
-	
+
 .PHONY: bonus all clean fclean re

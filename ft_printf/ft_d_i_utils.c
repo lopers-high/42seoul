@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:00:19 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/13 13:17:49 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:52:55 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ static char	*ft_num_width(char *str, t_info info, int len)
 		return (NULL);
 	while (i < info.width - len)
 	{
-		if (info.flag & 2 && info.precision == -1)
+		if (info.flag & 2 && info.precision == -2)
 			space[i++] = '0';
 		else
 			space[i++] = ' ';
@@ -102,7 +102,7 @@ char	*ft_modify_signed_number(char *str, t_info info)
 	if ((info.flag & 16 || info.flag & 8) && info.sign >= 0)
 		str = ft_num_plus_space(str, info, info.sign);
 	len = ft_strlen(str);
-	if (info.precision > 0 && info.precision > len)
+	if (info.precision > len) // info.precision > 0
 		str = ft_num_precision(str, info, len);
 	if (info.sign == -1)
 	{

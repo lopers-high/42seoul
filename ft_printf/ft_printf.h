@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:44 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/13 16:48:35 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/14 16:28:37 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 # include <stdarg.h>
 # include <unistd.h>
 # include "libft/libft.h"
-# include <stdio.h>
 # include <limits.h>
 
 typedef struct s_info
 {
 	unsigned char	flag;
-	int				width;
-	long			precision;
+	long long		width;
+	long long		precision;
 	char			type;
 	int				sign;
 }	t_info;
@@ -48,5 +47,6 @@ int		ft_printf(const char *format, ...);
 size_t	ft_uintlen(size_t n);
 int		ft_select_format(const char **fmt, va_list ap, t_info *info, int ret);
 int		ft_write(char *ret, int retlen);
+int		ft_handle_precision_error(unsigned long long precision, int size);
 
 #endif
