@@ -1,16 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_uitoa.c                                         :+:      :+:    :+:   */
+/*   ft_utils.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/24 18:12:16 by jinypark          #+#    #+#             */
-/*   Updated: 2022/05/24 18:12:21 by jinypark         ###   ########.fr       */
+/*   Created: 2022/06/14 16:08:38 by jinypark          #+#    #+#             */
+/*   Updated: 2022/06/15 14:13:27 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
+
+void	*ft_free(char* str)
+{
+	free(str);
+	return (NULL);
+}
 
 size_t	ft_uintlen(size_t n)
 {
@@ -53,4 +59,15 @@ char	*ft_uitoa(size_t n)
 	ft_putnbr(arr, n, len);
 	arr[len] = '\0';
 	return (arr);
+}
+
+int	ft_handle_precision_error(unsigned long long precision, int len)
+{
+	if (precision > INT_MAX && precision - len <= INT_MAX)
+		precision = precision - len;
+	else if (precision == INT_MAX)
+		return (-1);
+	else
+		precision = (int)precision;
+	return (precision);
 }

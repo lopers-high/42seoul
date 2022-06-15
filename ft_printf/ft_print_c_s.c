@@ -21,7 +21,7 @@ static char	*ft_null_width(char *str, t_info info, int len)
 	i = 0;
 	space = (char *)ft_calloc((info.width - len) + 1, sizeof(char));
 	if (space == NULL)
-		return (NULL);
+		return (ft_free(str));
 	while (i < info.width - len)
 	{
 		space[i++] = ' ';
@@ -36,7 +36,7 @@ static char	*ft_null_width(char *str, t_info info, int len)
 	return (ret);
 }
 
-char	*ft_modify_null(t_info info)
+static char	*ft_modify_null(t_info info)
 {
 	int		len;
 	char	*tmp;
@@ -48,7 +48,7 @@ char	*ft_modify_null(t_info info)
 	{
 		tmp = (char *)ft_calloc(info.precision + 1, sizeof(char));
 		if (tmp == NULL)
-			return (NULL);
+			return (ft_free(str));
 		ft_strlcpy(tmp, str, info.precision + 1);
 		free(str);
 	}
@@ -60,7 +60,7 @@ char	*ft_modify_null(t_info info)
 	return (tmp);
 }
 
-int	ft_print_null(t_info info, int retlen)
+static int	ft_print_null(t_info info, int retlen)
 {
 	char	*str;
 	char	*ret;

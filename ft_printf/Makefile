@@ -12,24 +12,24 @@
 
 NAME = libftprintf.a
 
-CC = clang
+CC = cc
 
 CFLAGS = -Wall -Wextra -Werror
 
 LIBFT_DIR = libft
 
-SRCS = ft_printf.c ft_c_s_utils.c ft_d_i_utils.c ft_u_x_p_utils.c ft_print_c_s.c ft_print_d_i.c ft_print_u_x_p.c ft_set_flag.c ft_uitoa.c ft_utils.c
+SRCS = ft_printf.c ft_c_s_utils.c ft_d_i_utils.c ft_u_x_p_utils.c ft_print_c_s.c ft_print_d_i.c ft_print_u_x_p.c ft_set_flag.c ft_utils.c
 
-BONUS = ft_printf_bonus.c c_s_utils_bonus.c d_i_utils_bonus.c u_x_p_utils_bonus.c ft_print_char_bonus.c
+BONUS = ft_printf_bonus.c ft_c_s_utils_bonus.c ft_d_i_utils_bonus.c ft_u_x_p_utils_bonus.c ft_print_c_s_bonus.c ft_print_d_i_bonus.c ft_print_u_x_p_bonus.c ft_set_flag_bonus.c ft_utils_bonus.c
 
 OBJS_SRCS = $(SRCS:.c=.o)
 
 OBJS_BONUS = $(BONUS:.c=.o)
 
 ifdef BONUS_FLAG
-	OBJS = $(OBJS_SRCS:.c=.o) $(BONUS:.c=.o)
+	OBJS = $(OBJS_BONUS)
 else
-	OBJS = $(OBJS_SRCS:.c=.o)
+	OBJS = $(OBJS_SRCS)
 endif
 
 all: $(NAME)

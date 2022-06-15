@@ -55,7 +55,7 @@ static t_info	set_info(void)
 	return (info);
 }
 
-static t_info	ft_ignore_flag(t_info info)
+t_info	ft_ignore_flag(t_info info)
 {
 	if ((info.flag & 1 && info.flag & 2) || \
 	(info.precision > 0 && info.flag & 2))
