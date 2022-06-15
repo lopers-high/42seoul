@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:00:19 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/14 16:52:55 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:01:52 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ char	*ft_modify_signed_number(char *str, t_info info)
 	if ((info.flag & 16 || info.flag & 8) && info.sign >= 0)
 		str = ft_num_plus_space(str, info, info.sign);
 	len = ft_strlen(str);
-	if (info.precision > len) // info.precision > 0
+	if (info.precision > len)
 		str = ft_num_precision(str, info, len);
 	if (info.sign == -1)
 	{

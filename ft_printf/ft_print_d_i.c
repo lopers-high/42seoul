@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/24 18:01:25 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/14 16:32:31 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/15 14:02:02 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,4 +54,3 @@ int	ft_print_decimal(va_list ap, t_info info, int retlen)
 	ret = ft_modify_signed_number(str, info);
 	return (ft_write(ret, retlen));
 }
-
