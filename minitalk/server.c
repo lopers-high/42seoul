@@ -6,11 +6,11 @@
 
 void handler(int sig, siginfo_t *info, void *oinfo)
 {
-    static unsigned char         c;
-    static int          i;
-    static pid_t    c_pid;
-    static char     buf[10000];
-    static int      n;
+    static unsigned char c;
+    static int i;
+    static pid_t c_pid;
+    static char buf[9984];
+    static int n;
 
     if (c_pid == 0)
         c_pid = info->si_pid;
@@ -26,29 +26,29 @@ void handler(int sig, siginfo_t *info, void *oinfo)
     {
         i = 0;
         buf[n++] = c;
-        // ft_putchar_fd(c, 1);
-        // if (c != '\n')
-        //     kill(c_pid, SIGUSR1);
-        // else
-        if (n == 10000)
+        if (n == 9984)
         {
             ft_putstr_fd(buf, 1);
-            ft_bzero(buf, 10000);
+            ft_bzero(buf, 9984);
             n = 0;
         }
-        else if (c == '\n')
-        {   
+        else if (c == 0)
+        {
             buf[n] = 0;
-            ft_putstr_fd(buf, 1);
-            ft_bzero(buf, 10000);
+            ft_putendl_fd(buf, 1);
+            ft_bzero(buf, 9984);
             n = 0;
+            usleep(20);
+            kill(c_pid, SIGUSR2);
+            c_pid = 0;
+            return;
         }
         c = 0;
     }
     else
         c <<= 1;
-        usleep(10);
-        kill(info->si_pid, SIGUSR1);
+    usleep(20);
+    kill(c_pid, SIGUSR1);
 }
 
 int main(void)
@@ -57,8 +57,8 @@ int main(void)
 
     act.sa_flags = SA_SIGINFO;
     act.sa_sigaction = handler;
-    //sigemptyyset;
-    //sigaddset(SIG1, SIG2);
+    // sigemptyyset;
+    // sigaddset(SIG1, SIG2);
     ft_putstr_fd("Server PID: ", 1);
     ft_putnbr_fd(getpid(), 1);
     ft_putchar_fd('\n', 1);
@@ -67,6 +67,4 @@ int main(void)
     while (1)
         pause();
     return (0);
-
 }
-
