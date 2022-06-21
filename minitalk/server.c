@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/06/17 13:17:29 by jinypark          #+#    #+#             */
-/*   Updated: 2022/06/17 21:11:09 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/06/21 15:43:45 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int	print_buf(unsigned char *c, int *i, int *c_pid)
 
 	*i = 0;
 	buf[n++] = *c;
-	if (n == 9984)
+	if (n == 9985)
 	{
 		ft_putstr_fd(buf, 1);
 		ft_bzero(buf, 9984);
