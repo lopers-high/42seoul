@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:17 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 17:21:22 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/12 16:34:14 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ typedef struct s_img
 
 typedef struct s_handler
 {
+	double	first_scale;
 	double	scale;
 	double	angle_x;
 	double	angle_y;
@@ -69,7 +70,8 @@ typedef struct s_all
 	t_point		**point;
 }	t_all;
 
-# define X_EVENT_KEY_PRESS 2
+# define EVENT_KEY_PRESS 2
+# define EVENT_MOUSE_CLICK 4
 # define KEY_ESC 53
 # define KEY_UP 126
 # define KEY_DOWN 125

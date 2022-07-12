@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:36:28 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 11:37:22 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/12 13:46:58 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,6 @@ void	get_one_line(t_point *point, int y, char *a_line, int width)
 	char	**split;
 	int		i;
 	char	**tmp;
-	int		x;
 
 	i = 0;
 	split = ft_split(a_line, " ");

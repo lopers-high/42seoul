@@ -1,7 +1,6 @@
 test :
-	cc -fsanitize=address *.c ../libft/libft.a ../minilibx_macos/libmlx.a -framework openGL -framework AppKit
+	cc -Wall -Werror -Wextra -fsanitize=address *.c ../libft/libft.a ../minilibx_macos/libmlx.a -framework openGL -framework AppKit
 	./a.out ../test_maps/42.fdf
-	rm -rf ./a.out
 
 test2:
 	cc *.c ../libft/libft.a

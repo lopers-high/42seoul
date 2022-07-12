@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/07 14:25:48 by jinyoung          #+#    #+#             */
-/*   Updated: 2022/07/11 18:50:35 by jinypark         ###   ########.fr       */
+/*   Created: 2022/07/07 14:25:48 by jinypark          #+#    #+#             */
+/*   Updated: 2022/07/12 16:34:01 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,14 +40,24 @@ void	parallel(t_handler *handler)
 	++handler->flag;
 }
 
-int	mouse_action(int keycode, t_mlx *mlx)
+void	reset_pos(t_mlx *mlx)
 {
-	if (keycode == 1)
-		(mlx->handler.delta_y) -= 30;
-	else if (keycode == 2)
-		(mlx->handler.delta_y) -= 30;
-	else
-		(mlx->handler.delta_y) -= 30;
+	mlx->handler.angle_x = 0;
+	mlx->handler.angle_y = 0;
+	mlx->handler.angle_z = 0;
+	mlx->handler.delta_x = 800;
+	mlx->handler.delta_y = 450;
+	mlx->handler.scale = mlx->handler.first_scale;
+}
+
+int	mouse_click(int keycode, int x, int y, t_mlx *mlx)
+{
+	(void)x;
+	(void)y;
+	if (keycode == 4)
+		(mlx->handler.scale) += mlx->handler.scale * 0.1;
+	else if (keycode == 5)
+		(mlx->handler.scale) -= mlx->handler.scale * 0.1;
 	return (0);
 }
 
@@ -88,6 +98,8 @@ int	key_press(int keycode, t_mlx *mlx)
 		mlx->handler.angle_z = 35.264;
 		mlx->handler.flag = 0;
 	}
+	else if (keycode == KEY_R)
+		reset_pos(mlx);
 	return (0);
 }
 
@@ -99,13 +111,13 @@ void	set_mlx(t_mlx *mlx, t_map *map)
 
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, 1600, 900, "FdF");
-	ft_bzero(&mlx->handler, sizeof(t_handler));
 	scale = 1;
 	width = map->width;
 	height = map->height;
-	while (scale * width < 1000 && scale * height < 500)
+	while (scale * width < 1000 && scale * height < 700)
 		++scale;
 	mlx->handler.scale = scale;
+	mlx->handler.first_scale = scale;
 	mlx->handler.delta_x = 800;
 	mlx->handler.delta_y = 450;
 }
@@ -139,6 +151,7 @@ int	main(int argc, char **argv)
 	t_mlx	mlx;
 	t_all	all;
 
+	(void)argc;
 	map = rec_checker(argv[1]);
 	set_mlx(&mlx, &map);
 	point = make_points(&map, argv[1]);
@@ -149,8 +162,10 @@ int	main(int argc, char **argv)
 	all.img->ptr = mlx_new_image(mlx.mlx, 1600, 900);
 	all.img->data = (int *)mlx_get_data_addr(all.img->ptr, \
 		&(all.img->bpp), &(all.img->size_l), &(all.img->endian));
-	mlx_hook(mlx.win, X_EVENT_KEY_PRESS, 0, key_press, &mlx);
+	mlx_hook(mlx.win, EVENT_MOUSE_CLICK, 0, mouse_click, &mlx);
+	mlx_hook(mlx.win, EVENT_KEY_PRESS, 0, key_press, &mlx);
 	mlx_loop_hook(mlx.mlx, main_loop, &all);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
+
