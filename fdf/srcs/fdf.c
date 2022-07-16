@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:25:48 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:01 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/16 11:31:10 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ void	set_mlx(t_mlx *mlx, t_map *map)
 {
 	int		width;
 	int		height;
-	int		scale;
+	double	scale;
 
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, 1600, 900, "FdF");
@@ -120,6 +120,9 @@ void	set_mlx(t_mlx *mlx, t_map *map)
 	mlx->handler.first_scale = scale;
 	mlx->handler.delta_x = 800;
 	mlx->handler.delta_y = 450;
+	mlx->handler.angle_x = 0;
+	mlx->handler.angle_y = 0;
+	mlx->handler.angle_z = 0;
 }
 
 int	main_loop(t_all *all)
@@ -138,7 +141,7 @@ int	main_loop(t_all *all)
 	all->img->ptr = mlx_new_image(mlx->mlx, 1600, 900);
 	all->img->data = (int *)mlx_get_data_addr(img->ptr, \
 		&(img->bpp), &(img->size_l), &(img->endian));
-	ft(all);
+	rotate(all);
 	draw_line(all);
 	mlx_put_image_to_window(all->mlx->mlx, all->mlx->win, all->img->ptr, 0, 0);
 	return (0);
@@ -158,7 +161,7 @@ int	main(int argc, char **argv)
 	all.map = &map;
 	all.mlx = &mlx;
 	all.point = point;
-	all.img = calloc(1, sizeof(t_img));
+	all.img = ft_calloc(1, sizeof(t_img));
 	all.img->ptr = mlx_new_image(mlx.mlx, 1600, 900);
 	all.img->data = (int *)mlx_get_data_addr(all.img->ptr, \
 		&(all.img->bpp), &(all.img->size_l), &(all.img->endian));

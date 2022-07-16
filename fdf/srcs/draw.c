@@ -6,13 +6,13 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/11 17:20:42 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 17:20:59 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/16 10:43:13 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 
-void	ft(t_all *all)
+void	rotate(t_all *all)
 {
 	int		idx_y;
 	int		idx_x;

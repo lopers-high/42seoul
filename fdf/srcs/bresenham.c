@@ -6,18 +6,12 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:47:18 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/12 20:32:57 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/16 11:02:48 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-
-double	abs_double(double num)
-{
-	if (num < 0)
-		return (num * -1);
-	return (num);
-}
+#include <math.h>
 
 void	bresenham_x(t_point start, t_point finish, t_all *all, int color)
 {
@@ -29,6 +23,7 @@ void	bresenham_x(t_point start, t_point finish, t_all *all, int color)
 	double 	Yfactor;
 	double 	Xfactor;
 	double	scale;
+	double x2;
 
 	scale = all->mlx->handler.scale;
 	width = finish.iso_x - start.iso_x;
@@ -47,7 +42,7 @@ void	bresenham_x(t_point start, t_point finish, t_all *all, int color)
 	}
 	x = (int)(start.iso_x * scale);
 	y = start.iso_y * scale;
-	double x2 = (int)(finish.iso_x * scale);
+	x2 = (int)(finish.iso_x * scale);
 	formula = 2 * height - width;
 	while (x != x2)
 	{
@@ -75,6 +70,7 @@ void	bresenham_y(t_point start, t_point finish, t_all *all, int color)
 	int		Xfactor;
 	int		Yfactor;
 	double	scale;
+	double y2;
 
 	scale = all->mlx->handler.scale;
 	width = finish.iso_x - start.iso_x;
@@ -93,9 +89,9 @@ void	bresenham_y(t_point start, t_point finish, t_all *all, int color)
 	}
 	x = start.iso_x * scale;
 	y = (int)(start.iso_y * scale);
-	double y2 = (int)(finish.iso_y * scale);
+	y2 = (int)(finish.iso_y * scale);
 	formula = 2 * width - height;
-	while (y < y2)
+	while (y != y2)
 	{
 		if (formula < 0)
 			formula += (2 * width);
@@ -108,7 +104,7 @@ void	bresenham_y(t_point start, t_point finish, t_all *all, int color)
 			&& (int)(y + all->mlx->handler.delta_y) < 900 && (int)(y + all->mlx->handler.delta_y) >= 0)
 		all->img->data[(1600 * (int)(y + all->mlx->handler.delta_y) + \
 		(int)(x + all->mlx->handler.delta_x))] = color;
-		y += 1;
+		y += Yfactor;
 	}
 }
 
@@ -119,10 +115,14 @@ void	bresenham(t_point start, t_point finish, t_all *all)
 	int		color;
 
 	color = finish.color;
-	width = abs_double(finish.iso_x - start.iso_x);
-	height = abs_double(finish.iso_y - start.iso_y);
+	width =  fabs(finish.iso_x - start.iso_x);
+	height = fabs(finish.iso_y - start.iso_y);
 	if (width > height)
-		bresenham_x(start, finish, all, color);
+	{
+		bresenham_x(finish, start, all, color);
+	}
 	else
-		bresenham_y(start, finish, all, color);
+	{
+		bresenham_y(finish, start, all, color);
+	}
 }

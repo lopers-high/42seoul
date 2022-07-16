@@ -3,16 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jinypark <jinypark@student.42seoul.>       +#+  +:+       +#+        */
+/*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/17 19:48:45 by jinypark          #+#    #+#             */
-/*   Updated: 2022/03/31 19:38:58 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/11 15:45:02 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 
-static int	count_str(const char *str, char c)
+int	is_delimeter(char c, char *charset)
+{
+	int		i;
+
+	i = 0;
+	while (charset[i] != '\0')
+	{
+		if (c == charset[i])
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
+int	count_str(const char *str, char *c)
 {
 	size_t	i;
 	size_t	cnt;
@@ -23,19 +37,19 @@ static int	count_str(const char *str, char c)
 	flag = 0;
 	while (str[i])
 	{
-		if (str[i] != c && flag == 0)
+		if (!is_delimeter(str[i], c) && flag == 0)
 		{
 			cnt++;
 			flag = 1;
 		}
-		else if (str[i] == c)
+		else if (is_delimeter(str[i], c))
 			flag = 0;
 		i++;
 	}
 	return (cnt);
 }
 
-static size_t	put_str(char **arr, const char *str, char c, size_t cnt)
+static size_t	put_str(char **arr, const char *str, char *c, size_t cnt)
 {
 	size_t	len;
 	char	*tmp;
@@ -43,7 +57,7 @@ static size_t	put_str(char **arr, const char *str, char c, size_t cnt)
 
 	len = 0;
 	i = 0;
-	while (str[len] && str[len] != c)
+	while (str[len] && !is_delimeter(str[len], c))
 		len++;
 	tmp = (char *)malloc(sizeof(char) * (len + 1));
 	if (tmp == NULL)
@@ -58,7 +72,7 @@ static size_t	put_str(char **arr, const char *str, char c, size_t cnt)
 	return (len);
 }
 
-static int	make_arr(const char *str, char c, char **arr)
+static int	make_arr(const char *str, char *c, char **arr)
 {
 	size_t	cnt;
 	size_t	i;
@@ -69,7 +83,7 @@ static int	make_arr(const char *str, char c, char **arr)
 	len = 0;
 	while (str[i])
 	{
-		if (str[i] != c)
+		if (str[i] && !is_delimeter(str[i], c))
 		{
 			len = put_str(arr, &str[i], c, cnt++);
 			if (len)
@@ -77,14 +91,14 @@ static int	make_arr(const char *str, char c, char **arr)
 			else
 				return (--cnt);
 		}
-		while (str[i] && str[i] == c)
+		while (str[i] && is_delimeter(str[i], c))
 			i++;
 	}
 	arr[cnt] = NULL;
 	return (-1);
 }
 
-char	**ft_split(const char *str, char c)
+char	**ft_split(const char *str, char *c)
 {
 	char	**arr;
 	int		cnt;

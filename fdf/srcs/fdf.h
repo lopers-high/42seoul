@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:17 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/12 16:34:14 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/16 10:42:16 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 # define FDF_H
 
 # include <unistd.h>
+# include <stdio.h>
 
 typedef struct s_img
 {
@@ -109,7 +110,7 @@ t_point	**make_points(t_map *map, char *file_name);
 void	ft_isometric(double *x, double *y, double z);
 void	bresenham(t_point start, t_point finish, t_all *all);
 int		ft_atoi_base(char *str, char *base);
-void	ft(t_all *all);
+void	rotate(t_all *all);
 void	draw_line(t_all *all);
 
 #endif
