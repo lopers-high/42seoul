@@ -6,49 +6,13 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:25:48 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/16 11:31:10 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:41:08 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../minilibx_macos/mlx.h"
-#include "../libft/libft.h"
-#include <fcntl.h>
-#include <math.h>
-#include <stdio.h>
+#include "minilibx_macos/mlx.h"
+#include "libft/libft.h"
 #include "fdf.h"
-
-void	parallel(t_handler *handler)
-{
-	if (handler->flag % 3 == 0)
-	{
-		handler->angle_x = -90;
-		handler->angle_y = 0;
-		handler->angle_z = 0;
-	}
-	else if (handler->flag % 3 == 1)
-	{
-		handler->angle_x = -90;
-		handler->angle_y = 0;
-		handler->angle_z = 90;
-	}
-	else if (handler->flag % 3 == 2)
-	{
-		handler->angle_x = 0;
-		handler->angle_y = 0;
-		handler->angle_z = 0;
-	}
-	++handler->flag;
-}
-
-void	reset_pos(t_mlx *mlx)
-{
-	mlx->handler.angle_x = 0;
-	mlx->handler.angle_y = 0;
-	mlx->handler.angle_z = 0;
-	mlx->handler.delta_x = 800;
-	mlx->handler.delta_y = 450;
-	mlx->handler.scale = mlx->handler.first_scale;
-}
 
 int	mouse_click(int keycode, int x, int y, t_mlx *mlx)
 {
@@ -65,39 +29,17 @@ int	key_press(int keycode, t_mlx *mlx)
 {
 	if (keycode == KEY_ESC)
 		exit(0);
-	else if (keycode == KEY_UP)
-		(mlx->handler.delta_y) -= 30;
-	else if (keycode == KEY_DOWN)
-		(mlx->handler.delta_y) += 30;
-	else if (keycode == KEY_LEFT)
-		(mlx->handler.delta_x) -= 30;
-	else if (keycode == KEY_RIGHT)
-		(mlx->handler.delta_x) += 30;
-	else if (keycode == KEY_PLUS)
-		(mlx->handler.scale) += mlx->handler.scale * 0.1;
-	else if (keycode == KEY_MINUS)
-		(mlx->handler.scale) -= mlx->handler.scale * 0.1;
-	else if (keycode == KEY_S)
-		++(mlx->handler.angle_x);
-	else if (keycode == KEY_D)
-		++(mlx->handler.angle_y);
-	else if (keycode == KEY_E)
-		++(mlx->handler.angle_z);
-	else if (keycode == KEY_W)
-		--(mlx->handler.angle_x);
-	else if (keycode == KEY_A)
-		--(mlx->handler.angle_y);
-	else if (keycode == KEY_Q)
-		--(mlx->handler.angle_z);
+	if (keycode == KEY_UP || keycode == KEY_DOWN || \
+		keycode == KEY_RIGHT || keycode == KEY_LEFT)
+		move_image(mlx, keycode);
+	else if (keycode == KEY_W || keycode == KEY_S || \
+		keycode == KEY_A || keycode == KEY_D || \
+		keycode == KEY_Q || keycode == KEY_E)
+		rotate_image(mlx, keycode);
 	else if (keycode == KEY_TAB)
 		parallel(&mlx->handler);
 	else if (keycode == KEY_I)
-	{
-		mlx->handler.angle_x = -45;
-		mlx->handler.angle_y = 0;
-		mlx->handler.angle_z = 35.264;
-		mlx->handler.flag = 0;
-	}
+		isometric(mlx);
 	else if (keycode == KEY_R)
 		reset_pos(mlx);
 	return (0);
@@ -111,6 +53,7 @@ void	set_mlx(t_mlx *mlx, t_map *map)
 
 	mlx->mlx = mlx_init();
 	mlx->win = mlx_new_window(mlx->mlx, 1600, 900, "FdF");
+	ft_bzero(&mlx->handler, sizeof(t_handler));
 	scale = 1;
 	width = map->width;
 	height = map->height;
@@ -120,19 +63,14 @@ void	set_mlx(t_mlx *mlx, t_map *map)
 	mlx->handler.first_scale = scale;
 	mlx->handler.delta_x = 800;
 	mlx->handler.delta_y = 450;
-	mlx->handler.angle_x = 0;
-	mlx->handler.angle_y = 0;
-	mlx->handler.angle_z = 0;
 }
 
 int	main_loop(t_all *all)
 {
-	t_point	**point;
 	t_mlx	*mlx;
 	t_map	*map;
 	t_img	*img;
 
-	point = (all->point);
 	mlx = (all->mlx);
 	map = all->map;
 	img = all->img;
@@ -143,7 +81,7 @@ int	main_loop(t_all *all)
 		&(img->bpp), &(img->size_l), &(img->endian));
 	rotate(all);
 	draw_line(all);
-	mlx_put_image_to_window(all->mlx->mlx, all->mlx->win, all->img->ptr, 0, 0);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, img->ptr, 0, 0);
 	return (0);
 }
 
@@ -154,7 +92,7 @@ int	main(int argc, char **argv)
 	t_mlx	mlx;
 	t_all	all;
 
-	(void)argc;
+	ft_check_args(argc, argv);
 	map = rec_checker(argv[1]);
 	set_mlx(&mlx, &map);
 	point = make_points(&map, argv[1]);
@@ -167,8 +105,8 @@ int	main(int argc, char **argv)
 		&(all.img->bpp), &(all.img->size_l), &(all.img->endian));
 	mlx_hook(mlx.win, EVENT_MOUSE_CLICK, 0, mouse_click, &mlx);
 	mlx_hook(mlx.win, EVENT_KEY_PRESS, 0, key_press, &mlx);
+	mlx_hook(mlx.win, EVENT_CLICK_EXIT, 0, ft_exit, &mlx);
 	mlx_loop_hook(mlx.mlx, main_loop, &all);
 	mlx_loop(mlx.mlx);
 	return (0);
 }
-

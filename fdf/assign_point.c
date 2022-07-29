@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils2.c                                           :+:      :+:    :+:   */
+/*   assign_point.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:36:28 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/12 13:46:58 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:38:59 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
-#include "../libft/libft.h"
+#include "libft/libft.h"
 #include <stdlib.h>
-#include <fcntl.h>
-#include <stdio.h>
+#include <unistd.h>
+
+void	reset_pos(t_mlx *mlx)
+{
+	mlx->handler.angle_x = 0;
+	mlx->handler.angle_y = 0;
+	mlx->handler.angle_z = 0;
+	mlx->handler.delta_x = 800;
+	mlx->handler.delta_y = 450;
+	mlx->handler.scale = mlx->handler.first_scale;
+}
 
 int	parse_color(char *str)
 {

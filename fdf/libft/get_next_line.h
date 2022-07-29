@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 17:59:58 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 15:51:21 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:37:15 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 1000000
+#  define BUFFER_SIZE 50000
 # endif
 
 # include <unistd.h>

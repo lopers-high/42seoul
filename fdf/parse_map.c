@@ -1,19 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils.c                                            :+:      :+:    :+:   */
+/*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:35:46 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 15:45:52 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:40:03 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <stdio.h>
 #include <stdlib.h>
 #include <fcntl.h>
-#include "../libft/libft.h"
+#include <unistd.h>
+#include "libft/libft.h"
 #include "fdf.h"
 
 void	ft_error(char *str)
@@ -37,16 +37,15 @@ void	ft_check_args(int argc, char **argv)
 	int	i;
 
 	if (argc != 2)
-		ft_error("wrong arguments");
+		ft_error("Wrong Arguments");
 	i = 0;
-	while (argv[1][i] != '.')
+	while (argv[1][i])
 	{
-		if (argv[1][i] == '\0')
-			ft_error("wrong file");
-		i++;
+		if (ft_strncmp(argv[1] + i - 1, ".fdf\0", 5) == 0)
+			return ;
+		++i;
 	}
-	if (ft_strncmp(argv[1] + i, ".fdf\0", 5) != 0)
-		ft_error("wrong name");
+	ft_error("Wrong File Name");
 }
 
 t_map	rec_checker(char *file_name)
@@ -64,7 +63,7 @@ t_map	rec_checker(char *file_name)
 	while (line)
 	{
 		if (count_str(line, " \t\n") != col_count)
-			ft_error("invalid map");
+			ft_error("Invalid Map");
 		++row_count;
 		free(line);
 		line = get_next_line(fd);
@@ -74,6 +73,5 @@ t_map	rec_checker(char *file_name)
 	line = NULL;
 	map.width = col_count;
 	map.height = row_count;
-	printf("col : %d, row  %d\n", map.width, map.height);
 	return (map);
 }

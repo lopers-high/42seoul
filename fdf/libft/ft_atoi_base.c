@@ -6,13 +6,14 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/02/14 14:38:31 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 11:46:01 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:53:39 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../libft/libft.h"
+#include <stdio.h>
 
-int	base_validation(char *b)
+static int	base_validation(char *b)
 {
 	int	len;
 	int	i;
@@ -41,7 +42,7 @@ int	base_validation(char *b)
 	return (len);
 }
 
-int	check_str(char c, char *base)
+static int	check_str(char c, char *base)
 {
 	int	len;
 	int	i;
@@ -63,7 +64,7 @@ int	check_str(char c, char *base)
 	return (0);
 }
 
-int	ft_ctoi(char c, char *base)
+static int	ft_ctoi(char c, char *base)
 {
 	int		len;
 	int		i;
@@ -82,7 +83,7 @@ int	ft_ctoi(char c, char *base)
 	return (0);
 }
 
-int	put_nbr(char *str, int i, int sign, char *base)
+static int	put_nbr(char *str, int i, int sign, char *base)
 {
 	long long	nbr;
 

@@ -1,27 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fdf.h                                              :+:      :+:    :+:   */
+/*   fdf_bonus.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/07 14:32:17 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/16 10:42:16 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 14:56:58 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef FDF_H
-# define FDF_H
+#ifndef FDF_BONUS_H
+# define FDF_BONUS_H
 
-# include <unistd.h>
-# include <stdio.h>
+typedef struct s_line
+{
+	int	start_x;
+	int	start_y;
+	int	finish_x;
+	int	finish_y;
+	int	color;
+}	t_line;
+
+typedef struct s_bresenham
+{
+	int	width;
+	int	height;
+	int	x_factor;
+	int	y_factor;
+}	t_bresenham;
 
 typedef struct s_img
 {
 	void	*ptr;
 	int		*data;
-	int		width;
-	int		height;
 	int		size_l;
 	int		bpp;
 	int		endian;
@@ -51,9 +63,9 @@ typedef struct s_point
 	int			x;
 	int			y;
 	int			z;
-	double		rotated_z;
-	double		iso_x;
-	double		iso_y;
+	double		trans_x;
+	double		trans_y;
+	double		trans_z;
 	int			color;
 }	t_point;
 
@@ -73,6 +85,7 @@ typedef struct s_all
 
 # define EVENT_KEY_PRESS 2
 # define EVENT_MOUSE_CLICK 4
+# define EVENT_CLICK_EXIT 17
 # define KEY_ESC 53
 # define KEY_UP 126
 # define KEY_DOWN 125
@@ -85,17 +98,8 @@ typedef struct s_all
 # define KEY_W 13
 # define KEY_E 14
 # define KEY_R 15
-# define KEY_1 18
-# define KEY_2 19
-# define KEY_3 20
-# define KEY_4 21
-# define KEY_6 22
-# define KEY_5 23
 # define KEY_I 34
 # define KEY_TAB 48
-# define KEY_PLUS 24
-# define KEY_MINUS 27
-
 # define HEX "0123456789abcdef"
 
 void	rotate_x(double y, double z, t_point *point, double angle);
@@ -105,12 +109,15 @@ void	ft_error(char *str);
 void	ft_check_args(int argc, char **argv);
 int		ft_open_file(char *file_name);
 t_map	rec_checker(char *file_name);
-int		is_set(char c, char const *set);
 t_point	**make_points(t_map *map, char *file_name);
-void	ft_isometric(double *x, double *y, double z);
-void	bresenham(t_point start, t_point finish, t_all *all);
-int		ft_atoi_base(char *str, char *base);
+void	bresenham(t_line *line, t_all *all);
 void	rotate(t_all *all);
 void	draw_line(t_all *all);
+void	parallel(t_handler *handler);
+void	reset_pos(t_mlx *mlx);
+int		ft_exit(void);
+void	isometric(t_mlx *mlx);
+void	move_image(t_mlx *mlx, int keycode);
+void	rotate_image(t_mlx *mlx, int keycode);
 
 #endif

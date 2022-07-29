@@ -6,7 +6,7 @@
 /*   By: jinypark <jinypark@student.42seoul.kr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/15 17:47:39 by jinypark          #+#    #+#             */
-/*   Updated: 2022/07/11 15:45:13 by jinypark         ###   ########.fr       */
+/*   Updated: 2022/07/18 13:56:22 by jinypark         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int		ft_isalpha(int c);
 void	*ft_bzero(void *s, size_t n);
 void	*ft_calloc(size_t count, size_t size);
 char	*get_next_line(int fd);
-int	count_str(const char *str, char *c);
+int		count_str(const char *str, char *c);
+int		ft_atoi_base(char *str, char *base);
 
 #endif
